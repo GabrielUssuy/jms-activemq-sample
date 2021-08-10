@@ -16,8 +16,8 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-core</artifactId>
-            <version>5.7.0</version>
+            <artifactId>activemq-all</artifactId>
+            <version>5.16.2</version>
         </dependency>
     </dependencies>
 </project>
