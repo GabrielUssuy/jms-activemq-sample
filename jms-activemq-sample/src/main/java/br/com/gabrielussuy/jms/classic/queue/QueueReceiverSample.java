@@ -12,25 +12,26 @@ import javax.naming.InitialContext;
 
 public class QueueReceiverSample {
 
-    private static final String QUEUE_NAME = "financeiro";
+    private static final String QUEUE_NAME = "financial";
 
     public static void main(String[] args) throws Exception {
         InitialContext ctx = new InitialContext();
         QueueConnectionFactory cf = (QueueConnectionFactory)ctx.lookup("ConnectionFactory");
-        QueueConnection conexao = cf.createQueueConnection();
-        conexao.start();
 
-        QueueSession sessao = conexao.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
-        Queue fila = (Queue) ctx.lookup(QUEUE_NAME);
-        QueueReceiver receiver = (QueueReceiver) sessao.createReceiver(fila );
+        QueueConnection connection = cf.createQueueConnection();
+        connection.start();
+
+        QueueSession session = connection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
+        Queue queue = (Queue) ctx.lookup(QUEUE_NAME);
+        QueueReceiver receiver = (QueueReceiver) session.createReceiver(queue);
 
         Message message = receiver.receive();
         System.out.println(message);
 
         new Scanner(System.in).nextLine();
 
-        sessao.close();
-        conexao.close();
+        session.close();
+        connection.close();
         ctx.close();
     }
 }

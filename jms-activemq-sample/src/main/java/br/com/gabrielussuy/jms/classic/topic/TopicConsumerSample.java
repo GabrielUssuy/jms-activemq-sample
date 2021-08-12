@@ -1,25 +1,28 @@
-package br.com.gabrielussuy.jms.classic.queue;
+package br.com.gabrielussuy.jms.classic.topic;
 
 import javax.jms.*;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.util.Scanner;
 
-public class QueueConsumerSample {
+public class TopicConsumerSample {
 
-    private static final String QUEUE_NAME = "financial";
+    private static final String TOPIC_NAME = "store";
+    private static final String CLIENT_ID = "inventory";
+    private static final String SIGNATURE = "signature";
 
     public static void main(String[] args) throws NamingException, JMSException {
         InitialContext context = new InitialContext();
         ConnectionFactory factory = (ConnectionFactory) context.lookup("ConnectionFactory");
 
         Connection connection = factory.createConnection();
+        connection.setClientID(CLIENT_ID);
         connection.start();
 
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-        Destination queue = (Destination) context.lookup(QUEUE_NAME);
+        Topic  topic = (Topic ) context.lookup(TOPIC_NAME);
 
-        MessageConsumer consumer = session.createConsumer(queue);
+        MessageConsumer consumer = session.createDurableSubscriber(topic, SIGNATURE);
 
         consumer.setMessageListener(message -> {
             TextMessage textMessage = (TextMessage) message;

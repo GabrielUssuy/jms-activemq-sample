@@ -1,12 +1,12 @@
-package br.com.gabrielussuy.jms.classic.queue;
+package br.com.gabrielussuy.jms.classic.topic;
 
 import javax.jms.*;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-public class QueueProducerSample {
+public class TopicProducerSample {
 
-    private static final String QUEUE_NAME = "financial";
+    private static final String TOPIC_NAME = "store";
     private static final String MESSAGE = "<order><id>123</id></order>";
 
     public static void main(String[] args) throws NamingException, JMSException {
@@ -15,13 +15,16 @@ public class QueueProducerSample {
 
         Connection connection = factory.createConnection();
         connection.start();
-
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-        Destination queue = (Destination) context.lookup(QUEUE_NAME);
 
-        MessageProducer producer = session.createProducer(queue);
+        Destination topic = (Destination) context.lookup(TOPIC_NAME);
+        MessageProducer producer = session.createProducer(topic);
+
         Message message = session.createTextMessage(MESSAGE);
-
         producer.send(message);
+
+        session.close();
+        connection.close();
+        context.close();
     }
 }

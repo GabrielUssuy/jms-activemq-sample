@@ -7,18 +7,19 @@ import java.util.Enumeration;
 
 public class QueueBrowserSample {
 
-    private static final String QUEUE_NAME = "financeiro";
+    private static final String QUEUE_NAME = "financial";
 
     public static void main(String[] args) throws NamingException, JMSException {
         InitialContext context = new InitialContext();
-
         ConnectionFactory factory = (ConnectionFactory) context.lookup("ConnectionFactory");
+
         Connection connection = factory.createConnection();
         connection.start();
 
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-        Destination fila = (Destination) context.lookup(QUEUE_NAME);
-        QueueBrowser browser = session.createBrowser((Queue) fila);
+        Destination queue = (Destination) context.lookup(QUEUE_NAME);
+
+        QueueBrowser browser = session.createBrowser((Queue) queue);
 
         Enumeration msgs = browser.getEnumeration();
         while (msgs.hasMoreElements()) {
