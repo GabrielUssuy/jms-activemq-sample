@@ -1,4 +1,4 @@
-package br.com.gabrielussuy.jms.classic;
+package br.com.gabrielussuy.jms.classic.queue;
 
 import javax.jms.Message;
 import java.util.Scanner;
@@ -10,7 +10,7 @@ import javax.jms.QueueSession;
 import javax.jms.Session;
 import javax.naming.InitialContext;
 
-public class Receiver {
+public class QueueReceiverSample {
 
     private static final String QUEUE_NAME = "financeiro";
 

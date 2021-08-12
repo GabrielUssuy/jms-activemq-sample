@@ -1,13 +1,13 @@
-package br.com.gabrielussuy.jms.classic;
+package br.com.gabrielussuy.jms.classic.queue;
 
 import javax.jms.*;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import java.util.Enumeration;
 
-public class Browser {
+public class QueueProducerSample {
 
     private static final String QUEUE_NAME = "financeiro";
+    private static final String MESSAGE = "<pedido><id>123</id></pedido>";
 
     public static void main(String[] args) throws NamingException, JMSException {
         InitialContext context = new InitialContext();
@@ -17,13 +17,11 @@ public class Browser {
         connection.start();
 
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-        Destination fila = (Destination) context.lookup(QUEUE_NAME);
-        QueueBrowser browser = session.createBrowser((Queue) fila);
+        Destination queue = (Destination) context.lookup(QUEUE_NAME);
 
-        Enumeration msgs = browser.getEnumeration();
-        while (msgs.hasMoreElements()) {
-            TextMessage msg = (TextMessage) msgs.nextElement();
-            System.out.println("Message: " + msg.getText());
-        }
+        MessageProducer producer = session.createProducer(queue);
+        Message message = session.createTextMessage(MESSAGE);
+
+        producer.send(message);
     }
 }
