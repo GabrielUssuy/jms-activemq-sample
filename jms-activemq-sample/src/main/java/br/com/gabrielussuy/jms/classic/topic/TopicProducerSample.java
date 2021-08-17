@@ -21,6 +21,7 @@ public class TopicProducerSample {
         MessageProducer producer = session.createProducer(topic);
 
         Message message = session.createTextMessage(MESSAGE);
+        message.setBooleanProperty("ebook", false);
         producer.send(message);
 
         session.close();

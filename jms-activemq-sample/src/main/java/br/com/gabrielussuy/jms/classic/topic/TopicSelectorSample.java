@@ -5,11 +5,11 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.util.Scanner;
 
-public class TopicConsumerSample {
+public class TopicSelectorSample {
 
     private static final String TOPIC_NAME = "store";
     private static final String CLIENT_ID = "inventory";
-    private static final String SIGNATURE = "signature";
+    private static final String SELECTOR_SIGNATURE = "selector_signature";
 
     public static void main(String[] args) throws NamingException, JMSException {
         InitialContext context = new InitialContext();
@@ -22,7 +22,7 @@ public class TopicConsumerSample {
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
         Topic  topic = (Topic ) context.lookup(TOPIC_NAME);
 
-        MessageConsumer consumer = session.createDurableSubscriber(topic, SIGNATURE);
+        MessageConsumer consumer = session.createDurableSubscriber(topic, SELECTOR_SIGNATURE, "ebook=true", false);
 
         consumer.setMessageListener(message -> {
             TextMessage textMessage = (TextMessage) message;
