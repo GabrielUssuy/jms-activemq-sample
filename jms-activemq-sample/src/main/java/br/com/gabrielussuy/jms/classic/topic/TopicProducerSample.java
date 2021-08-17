@@ -1,5 +1,7 @@
 package br.com.gabrielussuy.jms.classic.topic;
 
+import br.com.gabrielussuy.jms.utils.OrderFactory;
+
 import javax.jms.*;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -20,7 +22,7 @@ public class TopicProducerSample {
         Destination topic = (Destination) context.lookup(TOPIC_NAME);
         MessageProducer producer = session.createProducer(topic);
 
-        Message message = session.createTextMessage(MESSAGE);
+        Message message = session.createObjectMessage(OrderFactory.createOrderWithValues());
         message.setBooleanProperty("ebook", false);
         producer.send(message);
 

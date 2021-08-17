@@ -1,5 +1,8 @@
 package br.com.gabrielussuy.jms.classic.topic;
 
+import br.com.gabrielussuy.jms.utils.Order;
+import org.apache.activemq.ActiveMQConnectionFactory;
+
 import javax.jms.*;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -12,9 +15,11 @@ public class TopicConsumerSample {
     private static final String SIGNATURE = "signature";
 
     public static void main(String[] args) throws NamingException, JMSException {
+//        System.setProperty("org.apache.activemq.SERIALIZABLE_PACKAGES","*");
+
         InitialContext context = new InitialContext();
         ConnectionFactory factory = (ConnectionFactory) context.lookup("ConnectionFactory");
-
+        ((ActiveMQConnectionFactory) factory).setTrustAllPackages(true);
         Connection connection = factory.createConnection();
         connection.setClientID(CLIENT_ID);
         connection.start();
@@ -25,9 +30,10 @@ public class TopicConsumerSample {
         MessageConsumer consumer = session.createDurableSubscriber(topic, SIGNATURE);
 
         consumer.setMessageListener(message -> {
-            TextMessage textMessage = (TextMessage) message;
+            ObjectMessage objectMessage = (ObjectMessage)message;
             try {
-                System.out.println(textMessage.getText());
+                Order order = (Order) objectMessage.getObject();
+                System.out.println(order.getId());
             } catch (JMSException e) {
                 e.printStackTrace();
             }
