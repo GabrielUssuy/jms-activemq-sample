@@ -1,4 +1,4 @@
-package br.com.gabrielussuy.jms.utils;
+package br.com.gabrielussuy.sample.jms.utils;
 
 import java.io.Serializable;
 

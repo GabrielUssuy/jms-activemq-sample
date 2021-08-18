@@ -1,4 +1,4 @@
-package br.com.gabrielussuy.jms.classic.queue;
+package br.com.gabrielussuy.sample.jms.classic.queue;
 
 import javax.jms.Message;
 import java.util.Scanner;
@@ -10,7 +10,7 @@ import javax.jms.QueueSession;
 import javax.jms.Session;
 import javax.naming.InitialContext;
 
-public class QueueReceiverSample {
+public class QueueReceiver {
 
     private static final String QUEUE_NAME = "financial";
 
@@ -23,7 +23,7 @@ public class QueueReceiverSample {
 
         QueueSession session = connection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
         Queue queue = (Queue) ctx.lookup(QUEUE_NAME);
-        QueueReceiver receiver = (QueueReceiver) session.createReceiver(queue);
+        javax.jms.QueueReceiver receiver = (javax.jms.QueueReceiver) session.createReceiver(queue);
 
         Message message = receiver.receive();
         System.out.println(message);

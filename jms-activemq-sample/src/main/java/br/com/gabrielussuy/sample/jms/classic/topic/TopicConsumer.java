@@ -1,6 +1,6 @@
-package br.com.gabrielussuy.jms.classic.topic;
+package br.com.gabrielussuy.sample.jms.classic.topic;
 
-import br.com.gabrielussuy.jms.utils.Order;
+import br.com.gabrielussuy.sample.jms.utils.Order;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;
@@ -8,7 +8,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.util.Scanner;
 
-public class TopicConsumerSample {
+public class TopicConsumer {
 
     private static final String TOPIC_NAME = "store";
     private static final String CLIENT_ID = "inventory";

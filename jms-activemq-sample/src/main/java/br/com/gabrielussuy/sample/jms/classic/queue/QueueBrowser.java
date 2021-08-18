@@ -1,11 +1,11 @@
-package br.com.gabrielussuy.jms.classic.queue;
+package br.com.gabrielussuy.sample.jms.classic.queue;
 
 import javax.jms.*;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.util.Enumeration;
 
-public class QueueBrowserSample {
+public class QueueBrowser {
 
     private static final String QUEUE_NAME = "financial";
 
@@ -19,7 +19,7 @@ public class QueueBrowserSample {
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
         Destination queue = (Destination) context.lookup(QUEUE_NAME);
 
-        QueueBrowser browser = session.createBrowser((Queue) queue);
+        javax.jms.QueueBrowser browser = session.createBrowser((Queue) queue);
 
         Enumeration msgs = browser.getEnumeration();
         while (msgs.hasMoreElements()) {

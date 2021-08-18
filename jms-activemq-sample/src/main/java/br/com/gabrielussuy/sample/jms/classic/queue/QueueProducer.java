@@ -1,13 +1,13 @@
-package br.com.gabrielussuy.jms.classic.queue;
+package br.com.gabrielussuy.sample.jms.classic.queue;
 
 import javax.jms.*;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import java.util.Scanner;
 
-public class QueueConsumerSample {
+public class QueueProducer {
 
     private static final String QUEUE_NAME = "financial";
+    private static final String MESSAGE = "<order><id>123</id></order>";
 
     public static void main(String[] args) throws NamingException, JMSException {
         InitialContext context = new InitialContext();
@@ -19,21 +19,9 @@ public class QueueConsumerSample {
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
         Destination queue = (Destination) context.lookup(QUEUE_NAME);
 
-        MessageConsumer consumer = session.createConsumer(queue);
+        MessageProducer producer = session.createProducer(queue);
+        Message message = session.createTextMessage(MESSAGE);
 
-        consumer.setMessageListener(message -> {
-            TextMessage textMessage = (TextMessage) message;
-            try {
-                System.out.println(textMessage.getText());
-            } catch (JMSException e) {
-                e.printStackTrace();
-            }
-        });
-
-        new Scanner(System.in).nextLine();
-
-        session.close();
-        connection.close();
-        context.close();
+        producer.send(message);
     }
 }

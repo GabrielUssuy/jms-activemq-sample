@@ -1,11 +1,7 @@
-package br.com.gabrielussuy.jms.utils;
+package br.com.gabrielussuy.sample.jms.utils;
 
 import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
 
 public class OrderFactory {
 
