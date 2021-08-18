@@ -16,15 +16,14 @@ public class QueueAcknowledgeConsumer {
         Connection connection = factory.createConnection();
         connection.start();
 
-        Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        Session session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
         Destination queue = (Destination) context.lookup(QUEUE_NAME);
 
         MessageConsumer consumer = session.createConsumer(queue);
 
         consumer.setMessageListener(message -> {
-            TextMessage textMessage = (TextMessage) message;
             try {
-                System.out.println(textMessage.getText());
+                message.acknowledge();
             } catch (JMSException e) {
                 e.printStackTrace();
             }
