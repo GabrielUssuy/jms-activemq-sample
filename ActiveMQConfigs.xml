@@ -22,3 +22,6 @@
 		</map>
 	</authorizationPlugin> 
 <plugins>
+
+<!- Priority Config->
+<policyEntry queue=">" prioritizedMessages="true"/>

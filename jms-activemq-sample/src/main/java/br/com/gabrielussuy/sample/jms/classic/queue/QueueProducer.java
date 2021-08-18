@@ -22,6 +22,6 @@ public class QueueProducer {
         MessageProducer producer = session.createProducer(queue);
         Message message = session.createTextMessage(MESSAGE);
 
-        producer.send(message);
+        producer.send(message, DeliveryMode.NON_PERSISTENT, 3, 5000);
     }
 }
